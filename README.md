@@ -21,6 +21,9 @@ ENC 1: change the amount parameters will be changed
 KEY 2&3: select which synth will receive incoming midi notes
 
 -----------------------------------------
+*please be aware! at the moment "noizeop" only works if both reverb and compressor on the norns are turned off!*
+
+-----------------------------------------
 
 if you feel adventurous you can edit the supercollider engine of this project. just edit one of the six algorithms in there to fit your needs! edit this part of lib/Engine_NoizeOP.sc
 
