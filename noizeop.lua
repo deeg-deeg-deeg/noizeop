@@ -1,4 +1,4 @@
--- NOIZE OPERATOR! v1.0
+-- NOIZE OPERATOR! v1.1
 -- Noise Synth
 -- by deeg
 --
@@ -26,6 +26,7 @@ engine.name = 'NoizeOp'
 
 Noize = include('noizeop/lib/noizeop_engine')
 m = midi.connect(2)
+u = require("util")
 
 para_names = {"freq01", "freq02", "freq03", "freq04", "mul01", "mul02", "mul03", "mul04", "a_vol_01", "a_vol_02", "a_vol_03", "a_vol_04", "a_vol_05", "a_vol_06", "a_mod_01", "a_mod_02", "a_mod_03", "a_mod_04", "a_mod_05", "a_mod_06", "ffreq01", "q01", "ffreq02", "q02", "ffreq03", "q03",
 "rnd_freq","rnd_fil_freq", "lfo_val01", "lfo_val02","lfo_target", "lfo_delta", "lfo_off_delta", "rnd_speed", "possy", "poss_lim", "lowBord", "highBord", "midi_onoff"}
@@ -148,12 +149,15 @@ function init()
         lowBord = params:get("lowBord")
         highBord = params:get("highBord")
         
+        if params:get("rnd_fil_freq") == 1 then rndFilter = true end
+        if params:get("rnd_freq") == 1 then randomFreq = true end
         
+        redraw()
         clock.sync(1/speed)
         
         if randomFreq then
              decider=math.random(0,math.floor(poslimit))
-            if decider <=math.floor(possy) then
+            if decider <= math.floor(possy) then
                 
                 if highBord <= lowBord then highBord=lowBord+10 end
                 lowVal=math.random(0,math.floor(lowBord))
@@ -224,6 +228,9 @@ function init()
 
       end
     end
+    
+    
+    
   )
   
   
@@ -549,7 +556,9 @@ function redraw()
   screen.level(12)
   screen.move(70,20)
   screen.font_size(18)
-  
+ 
+
+   
   if whereamI == 27 then
     was = params:get(para_names[whereamI])
     if was == 1 then textwrite = "ON"
